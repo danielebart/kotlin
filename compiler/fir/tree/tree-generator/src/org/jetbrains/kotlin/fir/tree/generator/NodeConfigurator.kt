@@ -426,6 +426,11 @@ object NodeConfigurator : AbstractFieldConfigurator() {
             +name
         }
 
+        varargArgumentsExpression.configure {
+            +fieldList("arguments", expression)
+            +field("varargElementType", typeRef)
+        }
+
         resolvedQualifier.configure {
             +field("packageFqName", fqNameType)
             +field("relativeClassFqName", fqNameType, nullable = true)
