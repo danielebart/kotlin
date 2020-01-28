@@ -17,7 +17,6 @@ package org.jetbrains.kotlin.idea.hierarchy.calls
 
 import com.intellij.icons.AllIcons
 import com.intellij.ide.IdeBundle
-import com.intellij.ide.hierarchy.HierarchyNodeDescriptor
 import com.intellij.ide.hierarchy.call.CallHierarchyNodeDescriptor
 import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.roots.ui.util.CompositeAppearance
@@ -29,6 +28,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
 import com.intellij.ui.LayeredIcon
 import org.jetbrains.kotlin.descriptors.*
+import org.jetbrains.kotlin.idea.caches.resolve.resolveToDescriptorIfAny
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.renderer.DescriptorRenderer
 import org.jetbrains.kotlin.resolve.lazy.BodyResolveMode
@@ -83,7 +83,7 @@ class KotlinCallHierarchyNodeDescriptor(
         if (changes && myIsBase) {
             val icon = LayeredIcon(2)
             icon.setIcon(newIcon, 0)
-            icon.setIcon(AllIcons.Hierarchy.Base, 1, -AllIcons.Hierarchy.Base.iconWidth / 2, 0)
+            icon.setIcon(AllIcons.General.Modified, 1, -AllIcons.General.Modified.iconWidth / 2, 0)
             newIcon = icon
         }
         icon = newIcon
@@ -134,14 +134,14 @@ class KotlinCallHierarchyNodeDescriptor(
             if (element !is KtNamedDeclaration) {
                 return null
             }
-            var descriptor: DeclarationDescriptor? =
-                element as KtNamedDeclaration?. resolveToDescriptorIfAny BodyResolveMode.PARTIAL
-                    ?: return null
+
+            var descriptor: DeclarationDescriptor = element.resolveToDescriptorIfAny(BodyResolveMode.PARTIAL) ?: return null
             val elementText: String?
             if (element is KtClassOrObject) {
                 if (element is KtObjectDeclaration && element.isCompanion()) {
-                    descriptor = descriptor.containingDeclaration
-                    if (descriptor !is ClassDescriptor) return null
+                    val classDescriptor = descriptor.containingDeclaration
+                    if (classDescriptor !is ClassDescriptor) return null
+                    descriptor = classDescriptor
                     elementText = renderClassOrObject(descriptor)
                 } else if (element is KtEnumEntry) {
                     elementText = element.name
