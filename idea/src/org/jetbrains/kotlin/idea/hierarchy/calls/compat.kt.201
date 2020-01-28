@@ -13,6 +13,8 @@ typealias HierarchyTreeStructure = com.intellij.ide.hierarchy.newAPI.HierarchyTr
 typealias CallHierarchyBrowserBase = com.intellij.ide.hierarchy.newAPI.CallHierarchyBrowserBase
 typealias HierarchyScopeType = com.intellij.ide.hierarchy.newAPI.HierarchyScopeType
 typealias HierarchyBrowserBaseEx = com.intellij.ide.hierarchy.newAPI.HierarchyBrowserBaseEx
+typealias MethodHierarchyBrowserBase = com.intellij.ide.hierarchy.newAPI.MethodHierarchyBrowserBase
 
 fun getCallerType() =  CallHierarchyBrowserBase.getCallerType()
 fun getCalleeType() =  CallHierarchyBrowserBase.getCalleeType()
+fun getMethodType() =  MethodHierarchyBrowserBase.getMethodType()
