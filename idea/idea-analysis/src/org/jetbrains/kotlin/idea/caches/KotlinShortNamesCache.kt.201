@@ -222,6 +222,11 @@ class KotlinShortNamesCache(private val project: Project) : PsiShortNamesCache()
         return true
     }
 
+    override fun processMethodsWithName(name: String, scope: GlobalSearchScope, processor: PsiMethodProcessor): Boolean {
+        if (disableSearch.get()) return true
+        return ContainerUtil.process(getMethodsByName(name, scope), processor)
+    }
+
     override fun getMethodsByName(name: String, scope: GlobalSearchScope): Array<PsiMethod> {
         if (disableSearch.get()) return PsiMethod.EMPTY_ARRAY
         return withArrayProcessor(PsiMethod.EMPTY_ARRAY) { processor ->
@@ -243,11 +248,6 @@ class KotlinShortNamesCache(private val project: Project) : PsiShortNamesCache()
                 null
             )
         }
-    }
-
-    override fun processMethodsWithName(name: String, scope: GlobalSearchScope, processor: Processor<PsiMethod>): Boolean {
-        if (disableSearch.get()) return true
-        return ContainerUtil.process(getMethodsByName(name, scope), processor)
     }
     //endregion
 
