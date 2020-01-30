@@ -10609,9 +10609,19 @@ public class DiagnosticsTestGenerated extends AbstractDiagnosticsTest {
                     runTest("compiler/testData/diagnostics/tests/inference/completion/kt33166.kt");
                 }
 
+                @TestMetadata("kt36233.kt")
+                public void testKt36233() throws Exception {
+                    runTest("compiler/testData/diagnostics/tests/inference/completion/kt36233.kt");
+                }
+
                 @TestMetadata("lambdaWithVariableAndNothing.kt")
                 public void testLambdaWithVariableAndNothing() throws Exception {
                     runTest("compiler/testData/diagnostics/tests/inference/completion/lambdaWithVariableAndNothing.kt");
+                }
+
+                @TestMetadata("nestedVariance.kt")
+                public void testNestedVariance() throws Exception {
+                    runTest("compiler/testData/diagnostics/tests/inference/completion/nestedVariance.kt");
                 }
 
                 @TestMetadata("partialForIlt.kt")
